@@ -39,6 +39,7 @@ namespace Cassandra.NET
             }
 
             session.Dispose();
+            cluster.Dispose();
         }
 
         public IEnumerable<T> Select<T>(Expression<Func<T, bool>> predicate)
@@ -47,7 +48,7 @@ namespace Cassandra.NET
 
             var queryStatement = QueryBuilder.EvaluateQuery(predicate);
             var tableName = typeof(T).ExtractTableName<T>();
-            var selectQuery = $"select * from {tableName} where {queryStatement.Statment}";
+            var selectQuery = $"select * from {tableName} where {queryStatement.Statement}";
             var statement = new SimpleStatement(selectQuery, queryStatement.Values);
             var rows = session.Execute(statement);
 
@@ -63,7 +64,7 @@ namespace Cassandra.NET
 
             var queryStatement = QueryBuilder.EvaluateQuery(predicate);
             var tableName = typeof(T).ExtractTableName<T>();
-            var selectQuery = $"select avg({columnName}) from {tableName} where {queryStatement.Statment}";
+            var selectQuery = $"select avg({columnName}) from {tableName} where {queryStatement.Statement}";
 
             var statement = new SimpleStatement(selectQuery, queryStatement.Values);
             var rows = session.Execute(statement);
@@ -79,7 +80,7 @@ namespace Cassandra.NET
 
             var queryStatement = QueryBuilder.EvaluateQuery(predicate);
             var tableName = typeof(T).ExtractTableName<T>();
-            var selectQuery = $"select sum({columnName}) from {tableName} where {queryStatement.Statment}";
+            var selectQuery = $"select sum({columnName}) from {tableName} where {queryStatement.Statement}";
 
             var statement = new SimpleStatement(selectQuery, queryStatement.Values);
             var rows = session.Execute(statement);
@@ -95,7 +96,7 @@ namespace Cassandra.NET
 
             var queryStatement = QueryBuilder.EvaluateQuery(predicate);
             var tableName = typeof(T).ExtractTableName<T>();
-            var selectQuery = $"select min({columnName}) from {tableName} where {queryStatement.Statment}";
+            var selectQuery = $"select min({columnName}) from {tableName} where {queryStatement.Statement}";
 
             var statement = new SimpleStatement(selectQuery, queryStatement.Values);
             var rows = session.Execute(statement);
@@ -111,7 +112,7 @@ namespace Cassandra.NET
 
             var queryStatement = QueryBuilder.EvaluateQuery(predicate);
             var tableName = typeof(T).ExtractTableName<T>();
-            var selectQuery = $"select max({columnName}) from {tableName} where {queryStatement.Statment}";
+            var selectQuery = $"select max({columnName}) from {tableName} where {queryStatement.Statement}";
 
             var statement = new SimpleStatement(selectQuery, queryStatement.Values);
             var rows = session.Execute(statement);

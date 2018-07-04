@@ -12,11 +12,11 @@ namespace Cassandra.NET.Models
 
         public Query(string statment, object[] values)
         {
-            Statment = statment;
+            Statement = statment;
             Values = values;
         }
 
-        public string Statment { get; set; }
+        public string Statement { get; set; }
         public object[] Values { get; set; }
     }
 }
